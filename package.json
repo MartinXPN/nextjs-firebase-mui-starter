@@ -1,24 +1,32 @@
 {
-  "name": "next-template",
+  "name": "next-firebase-mui-starter",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "emulate": "(yarn --cwd functions build -- --watch) | (firebase emulators:start --import=./test_data --export-on-exit)",
+    "update:models": "(yarn --cwd functions/models build) && (yarn upgrade models)",
+    "postinstall": "yarn update:models"
   },
   "dependencies": {
+    "@sentry/nextjs": "^7.74.0",
+    "firebase": "^10.5.0",
+    "firebaseui": "^6.1.0",
+    "models": "file:functions/models",
+    "next": "^13.5.5",
+    "next-firebase-auth-edge": "^0.8.8",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.5"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "13.5.5"
+    "eslint-config-next": "^13.5",
+    "typescript": "^5"
   }
 }

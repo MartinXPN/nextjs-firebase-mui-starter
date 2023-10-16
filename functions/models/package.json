@@ -1,0 +1,26 @@
+{
+  "name": "models",
+  "description": "shared models for the whole project",
+  "version": "0.0.1",
+  "license": "MIT",
+  "declarationMap": true,
+  "composite": true,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib/**/*"],
+  "scripts": {
+    "lint": "eslint --ext .js,.ts ",
+    "build": "tsc",
+    "prepublishOnly": "tsc"
+  },
+  "exports": {
+    ".": "./lib/",
+    "./users": "./lib/users.js"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@typescript-eslint/parser": "^6",
+    "eslint": "^8",
+    "eslint-plugin-import": "^2"
+  }
+}
