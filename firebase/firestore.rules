@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isCurrentUser(auth, userId) {
+      return auth != null && auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow read: if isCurrentUser(request.auth, userId);
+      allow create, update: if isCurrentUser(request.auth, userId);
+
+      // Allow reading and writing user preferences for the current user
+      match /preferences/private {
+        allow read, write: if isCurrentUser(request.auth, userId);
+      }
+    }
+  }
+}

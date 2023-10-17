@@ -1,0 +1,18 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    function isCurrentUser(auth, userId) {
+      return auth != null && auth.uid == userId;
+    }
+
+    // Allow users to upload profile pictures under their directories
+    match /profilePictures/{userId}/{filename} {
+      allow write: if isCurrentUser(request.auth, userId);
+      allow read;
+    }
+  }
+}

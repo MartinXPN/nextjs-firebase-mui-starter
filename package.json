@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "emulate": "(yarn --cwd functions build -- --watch) | (firebase emulators:start --import=./test_data --export-on-exit)",
     "update:models": "(yarn --cwd functions/models build) && (yarn upgrade models)",
-    "postinstall": "yarn update:models"
+    "postinstall": "yarn update:models",
+    "emulate": "(yarn --cwd functions build -- --watch) | (firebase emulators:start --import=./test_data --export-on-exit)"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.13",
     "@sentry/nextjs": "^7.74.0",
     "firebase": "^10.5.0",
     "firebaseui": "^6.1.0",
@@ -19,7 +22,8 @@
     "next": "^13.5.5",
     "next-firebase-auth-edge": "^0.8.8",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "use-async-effect": "^2.2.7"
   },
   "devDependencies": {
     "@types/node": "^20",

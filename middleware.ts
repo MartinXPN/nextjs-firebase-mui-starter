@@ -6,7 +6,7 @@ const commonOptions = {
     loginPath: '/api/login',
     logoutPath: '/api/logout',
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY!,
-    cookieName: 'ProfoundAcademyAuth',
+    cookieName: 'AuthCookie',
     cookieSignatureKeys: [process.env.COOKIE_SECRET_CURRENT!, process.env.COOKIE_SECRET_PREVIOUS!],
     cookieSerializeOptions: {
         path: '/',
