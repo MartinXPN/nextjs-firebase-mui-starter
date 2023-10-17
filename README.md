@@ -1,4 +1,5 @@
 # The Ultimate Tech Stack for Building a Full-Stack MVP and Iterating Quickly
+![tech-stack-wallpaper](https://github.com/MartinXPN/nextjs-firebase-mui-starter/assets/16335716/e327c878-4b78-4b7d-9caf-67b8d34977e8)
 
 This repo is a template described the in blog post 
 [The Ultimate Tech Stack for Building a Full-Stack MVP and Iterating Quickly](https://dev.to/martinxpn/the-ultimate-tech-stack-for-building-a-full-stack-mvp-and-iterating-quickly-1gd6-temp-slug-5348001?preview=31a392f065401ab7f41f06b466b87548defe1bc7765bfb5aa5d0712d417372bf4be5e4d338070d0613a707e0d24bfd472c1a614c81100bb30fc9a98a).
