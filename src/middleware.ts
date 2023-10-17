@@ -28,7 +28,7 @@ const commonOptions = {
 export async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
 
-    // `/_next/` and `public/demo/*` are ignored by the watcher, but we need to ignore other files in `public` manually
+    // `/_next/` and `/demo/*` are ignored by the watcher, but we need to ignore other files in `public` manually
     if ([
         '/manifest.json',
         '/robots.txt',
@@ -36,6 +36,8 @@ export async function middleware(request: NextRequest) {
         '/logo192.png',
         '/logo512.png',
         '/logo.svg',
+        '/next.svg',
+        '/vercel.svg',
     ].includes(pathname))
         return;
     console.log('pathname:', pathname);

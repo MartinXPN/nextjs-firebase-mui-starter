@@ -14,8 +14,11 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@hookform/resolvers": "^3.3.2",
+    "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
     "@sentry/nextjs": "^7.74.0",
+    "add": "^2.0.6",
     "firebase": "^10.5.0",
     "firebaseui": "^6.1.0",
     "models": "file:functions/models",
@@ -23,7 +26,10 @@
     "next-firebase-auth-edge": "^0.8.8",
     "react": "^18",
     "react-dom": "^18",
-    "use-async-effect": "^2.2.7"
+    "react-hook-form": "^7.47.0",
+    "use-async-effect": "^2.2.7",
+    "yarn": "^1.22.19",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

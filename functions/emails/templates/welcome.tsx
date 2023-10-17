@@ -1,5 +1,5 @@
 import {
-    Body, Container, Head, Hr, Html, Img, Preview, Section, Text,
+    Body, Container, Head, Hr, Html, Img, Preview, Section, Text, Link,
 } from '@react-email/components';
 import * as React from 'react';
 
@@ -12,7 +12,7 @@ export const WelcomeEmail = ({name}: {name?: string}) => (
             // eslint-disable-next-line max-len
             fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
             lineHeight: '24px',
-            backgroundColor: '#ffffff',
+            backgroundColor: '#ffffff', // Comment this out for transparent background.
         }}>
             <Container style={{margin: 'auto'}}>
                 <Img src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png" alt="Next.js Logo"
@@ -24,7 +24,11 @@ export const WelcomeEmail = ({name}: {name?: string}) => (
                         Hey {name || 'there'}, welcome to Next.js + Firebase + MUI Starter!
                     </Text>
                     <Text style={{fontSize: '16px'}}>
-                        You can find the source code of this project on GitHub.
+                        You can find the source code of this project on{' '}
+                        {/* eslint-disable-next-line max-len */}
+                        <Link style={{color: '#fa541c'}} href="https://github.com/MartinXPN/nextjs-firebase-mui-starter">
+                            GitHub
+                        </Link>.
                         Feel free to use it as a starting point for your own projects.
                     </Text>
                 </Section>

@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import EmotionRootStyleRegistry from '@/theme/EmotionRootStyleRegistry';
 import ThemeProvider from "@/theme/ThemeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import AppLayout from "@/components/home/AppLayout";
 import '@/polyfills';
 import '@/firebase';
 import '@/app/globals.css';
@@ -46,7 +47,7 @@ export default async function RootLayout({children}: {
             <link rel="icon" href="/favicon.ico"/>
             <meta property="og:site_name" content={title}/>
 
-            {/* Clarity Script (for user-event tracking) */}
+            {/* Clarity Script (for user-event tracking) - paste the script below */}
             <Script id="clarity-script" strategy="lazyOnload">{`
             `}</Script>
         </head>
@@ -57,7 +58,9 @@ export default async function RootLayout({children}: {
         <ErrorBoundary>
         <AuthProvider defaultUser={defaultUser}>
             <CssBaseline/>
-            {children}
+            <AppLayout>
+                {children}
+            </AppLayout>
         </AuthProvider>
         </ErrorBoundary>
         </ThemeProvider>
