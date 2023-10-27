@@ -66,13 +66,13 @@ function UserName({user}: {user: User}) {
 }
 
 
-function UserPage({userId}: {userId: string}) {
-    const [user, setUser] = useState<User | null>(null);
+function UserPage({initialUser}: {initialUser: User | null}) {
+    const [user, setUser] = useState<User | null>(initialUser);
 
     useEffect(() => {
-        if( userId )
-            return onUserInfoChanged(userId, user => setUser(user));
-    }, [userId]);
+        if( initialUser?.id )
+            return onUserInfoChanged(initialUser?.id, user => setUser(user));
+    }, [initialUser?.id]);
 
     return <>
         <UserInfoRoot>

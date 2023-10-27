@@ -20,6 +20,7 @@
     "@sentry/nextjs": "^7.75.1",
     "add": "^2.0.6",
     "firebase": "^10.5.2",
+    "firebase-admin": "^11.11.0",
     "firebaseui": "^6.1.0",
     "models": "file:functions/models",
     "next": "^14.0.0",
