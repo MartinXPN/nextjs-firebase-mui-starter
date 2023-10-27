@@ -18,7 +18,7 @@
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.15",
     "@sentry/nextjs": "^7.75.1",
-    "add": "^2.0.6",
+    "@svgr/webpack": "^8.1.0",
     "firebase": "^10.5.2",
     "firebase-admin": "^11.11.0",
     "firebaseui": "^6.1.0",
@@ -29,7 +29,6 @@
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
     "use-async-effect": "^2.2.7",
-    "yarn": "^1.22.19",
     "zod": "^3.22.4"
   },
   "devDependencies": {
