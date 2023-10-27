@@ -2,9 +2,6 @@ const {withSentryConfig} = require('@sentry/nextjs');
 
 module.exports = withSentryConfig({
     reactStrictMode: true,
-    experimental: {
-        serverActions: true,
-    },
     webpack(config) {
         config.module.rules.push({
             test: /\.svg$/,
