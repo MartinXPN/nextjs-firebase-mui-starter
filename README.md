@@ -1,4 +1,4 @@
-# The Ultimate Tech Stack for Building a Full-Stack MVP and Iterating Quickly
+# The Ultimate 2024 Tech Stack for Building a Full-Stack MVP and Iterating Quickly
 ![tech-stack-wallpaper](https://github.com/MartinXPN/nextjs-firebase-mui-starter/assets/16335716/e327c878-4b78-4b7d-9caf-67b8d34977e8)
 
 This repo is a template described the in blog post 
@@ -164,7 +164,7 @@ Available scripts include:
 * `firebase deploy` Deploys the Firebase project to production (Functions, Firestore, and rules)
 * `firebase deploy --only hosting` Deploys the Rect app in the `build` folder to production
 * `yarn update:models` Updates the models in the Next.js app from `functions/models`
-* ` lsof -t -i tcp:5000 | xargs kill &&  lsof -t -i tcp:5001 | xargs kill &&  lsof -t -i tcp:9099 | xargs kill &&  lsof -t -i tcp:8080 | xargs kill &&  lsof -t -i tcp:9199 | xargs kill &&  lsof -t -i tcp:8087 | xargs kill # firebase kill all emulators` Kills all firebase emulators and frees up ports
+* `lsof -t -i tcp:5000 | xargs kill &&  lsof -t -i tcp:5001 | xargs kill &&  lsof -t -i tcp:9099 | xargs kill &&  lsof -t -i tcp:8080 | xargs kill &&  lsof -t -i tcp:9199 | xargs kill &&  lsof -t -i tcp:8087 | xargs kill # firebase kill all emulators` Kills all firebase emulators and frees up ports
 
 ## Project structure
 The project is organized as a mono-repo that includes both the front-end (React app) and the backend-end (Firebase serverless functions)
@@ -173,21 +173,21 @@ in one repository. Therefore, some things like models (schemas) are shared betwe
 ```markdown
 project
 |
-|-> firebase (includes Firebase-specific files like Storage and Firestore rules and Firestore indexes)
-|-> functions (firebase serverless functions)
-    |-> emails (react-email templates)
-    |-> generators (generators for models to speed up testing)
-    |-> models (all the models for both the front-end and the backend)
-    |-> services (the main functionality of each endpoint)
-    |-> test (includes tests for the serverless functions)
-    |-> index.ts (all the Firebase functions endpoints)
+|-> firebase        (includes Firebase-specific files like Storage and Firestore rules and Firestore indexes)
+|-> functions       (firebase serverless functions)
+    |-> emails      (react-email templates)
+    |-> generators  (generators for models to speed up testing)
+    |-> models      (all the models for both the front-end and the backend)
+    |-> services    (the main functionality of each endpoint)
+    |-> test        (includes tests for the serverless functions)
+    |-> index.ts    (all the Firebase functions endpoints)
 |
-|-> public (static assets, etc)
-|-> src (the main Next.js app source code)
-    |-> app (Next.js app router)
-    |-> server (Next.js layer that works on the server side)
-    |-> components (React components)
+|-> public          (static assets, etc)
+|-> src             (the main Next.js app source code)
+    |-> app         (Next.js app router)
+    |-> server      (Next.js layer that works on the server side)
+    |-> components  (React components)
     |-> ...
     |-> ...
-    |-> services (includes logic for reading and writing to firestore, connecting to firebase functions, uploading files, etc)
+    |-> services    (includes logic for reading and writing to firestore, connecting to firebase functions, uploading files, etc)
 ```
