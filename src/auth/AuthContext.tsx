@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {ParsedToken} from "@firebase/auth";
+import type {ParsedToken} from "@firebase/auth";
 
 export type AuthUser = {
     id: string | null;

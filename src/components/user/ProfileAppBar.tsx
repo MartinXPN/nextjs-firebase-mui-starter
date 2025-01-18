@@ -1,5 +1,6 @@
+import {MouseEvent, useState} from "react";
 import {AppBar, Box, Container, Toolbar} from '@mui/material';
-import {AppBarProfile} from "./Auth";
+import AppBarProfile from "./AppBarProfile";
 import AppBarHome from "@/components/home/AppBarHome";
 import ElevationScroll from "@/components/home/ElevationScroll";
 import IconButton from "@mui/material/IconButton";
@@ -8,23 +9,20 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@/components/Link";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ViewList from "@mui/icons-material/ViewList";
 import ListItemText from "@mui/material/ListItemText";
 import Sell from "@mui/icons-material/Sell";
-import SchoolIcon from '@mui/icons-material/School';
 import Info from "@mui/icons-material/Info";
 import Button from "@mui/material/Button";
-import {MouseEvent, useState} from "react";
 
-export default function ProfileAppBar({color}: {color?: string}) {
+
+export default function ProfileAppBar() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
     const handleCloseNavMenu = () => setAnchorElNav(null);
 
     return <>
         <ElevationScroll>
-        <AppBar color={color === 'home' ? 'inherit' : 'transparent'}
-                sx={{bgcolor: color === 'home' ? 'background.default' : 'background.paper'}}>
+            <AppBar color="inherit" sx={{bgcolor: 'background.default'}}>
         <Container maxWidth="xl">
         <nav>
         <Toolbar>

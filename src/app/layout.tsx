@@ -2,9 +2,7 @@ import {ReactNode} from "react";
 import {Metadata} from "next";
 import {cookies} from 'next/headers';
 import Script from "next/script";
-import CssBaseline from "@mui/material/CssBaseline";
 
-import EmotionRootStyleRegistry from '@/theme/EmotionRootStyleRegistry';
 import ThemeProvider from "@/theme/ThemeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import AppLayout from "@/components/home/AppLayout";
@@ -37,8 +35,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({children}: {
     children: ReactNode,
 }) {
-    const defaultUser = await getUser(cookies());
-    console.log('layout default user:', defaultUser?.id);
+    const defaultUser = await getUser(await cookies());
+    console.log(`layout default user: ${defaultUser?.id} with ${defaultUser?.signInProvider} provider`);
 
     return <>
         <html lang="en">
@@ -53,18 +51,15 @@ export default async function RootLayout({children}: {
         </head>
 
         <body>
-        <EmotionRootStyleRegistry>
         <ThemeProvider>
         <ErrorBoundary>
         <AuthProvider defaultUser={defaultUser}>
-            <CssBaseline/>
-            <AppLayout>
-                {children}
-            </AppLayout>
+        <AppLayout>
+            {children}
+        </AppLayout>
         </AuthProvider>
         </ErrorBoundary>
         </ThemeProvider>
-        </EmotionRootStyleRegistry>
         </body>
         </html>
     </>

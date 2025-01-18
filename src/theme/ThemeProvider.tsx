@@ -1,13 +1,18 @@
 'use client';
 
 import {memo, ReactNode} from "react";
-import {experimental_extendTheme as extendTheme, Experimental_CssVarsProvider as CssVarsProvider, getInitColorSchemeScript} from "@mui/material/styles";
 import {Roboto} from "next/font/google";
-import ColorModeContextProvider from "./ColorModeContext";
+import {createTheme, ThemeProvider as MuiThemeProvider} from "@mui/material/styles";
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
+import CssBaseline from "@mui/material/CssBaseline";
+import ColorModeContextProvider from "@/theme/ColorModeContext";
+import {AppRouterCacheProvider} from "@mui/material-nextjs/v15-appRouter";
+
 
 const font = Roboto({weight: ['300', '400', '500', '700'], subsets: ['latin']});
 
-export const theme = extendTheme({
+
+export const theme = createTheme({
     typography: {
         fontFamily: font.style.fontFamily,
         h1: {fontSize: 42, fontWeight: 'bold', fontFamily: font.style.fontFamily},
@@ -49,14 +54,18 @@ export const theme = extendTheme({
 });
 
 
+
 function ThemeProvider({children}: {children: ReactNode}) {
     return <>
-        {getInitColorSchemeScript()}
-        <CssVarsProvider theme={theme}>
-        <ColorModeContextProvider>
-            {children}
-        </ColorModeContextProvider>
-        </CssVarsProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <InitColorSchemeScript attribute="class" />
+            <MuiThemeProvider theme={theme}>
+            <ColorModeContextProvider>
+                <CssBaseline />
+                {children}
+            </ColorModeContextProvider>
+            </MuiThemeProvider>
+        </AppRouterCacheProvider>
     </>
 }
 

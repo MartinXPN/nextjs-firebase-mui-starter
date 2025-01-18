@@ -1,10 +1,13 @@
 import UserPage from '@/components/user/UserPage';
 import {getUser} from "@/server/users";
 
-export default async function Page({params: {userId}}: {
-    params: { userId: string}
-}) {
+const Page = async ({params}: {
+    params: Promise<{ userId: string }>,
+}) => {
+    const {userId} = await params;
     const user = await getUser(userId);
     console.log('Server user:', user);
     return <UserPage initialUser={user} />
 }
+
+export default Page;

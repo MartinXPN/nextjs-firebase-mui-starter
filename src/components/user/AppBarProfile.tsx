@@ -1,10 +1,8 @@
-import dynamic from "next/dynamic";
 import {memo, MouseEvent, useCallback, useContext, useState} from 'react';
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import Switch from "@mui/material/Switch";
@@ -12,44 +10,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Menu from '@mui/material/Menu';
-import {EmailAuthProvider, getAuth, GoogleAuthProvider} from 'firebase/auth';
 import {AuthContext} from "@/auth/AuthContext";
 import Link from "@/components/Link";
 import {ColorModeContext} from "@/theme/ColorModeContext";
-
-const FirebaseAuth = dynamic(() => import('./FirebaseAuth'));
-
-// Configure FirebaseUI.
-const uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: [
-        GoogleAuthProvider.PROVIDER_ID,
-        {
-            provider: EmailAuthProvider.PROVIDER_ID,
-            requireDisplayName: true,
-        },
-    ],
-    credentialHelper: 'none',
-    callbacks: {
-        // Avoid redirects after sign-in.
-        signInSuccessWithAuthResult: () => false,
-    },
-};
-
-
-export const SignIn = memo(function SignIn({alwaysShow}: {alwaysShow?: boolean}) {
-    const auth = useContext(AuthContext);
-    if (!auth?.isSignedIn || alwaysShow) {
-        return <>
-            <div style={{left: '50%', textAlign: 'center'}}>
-                <Typography variant="h6">Sign in to continue</Typography>
-                <FirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={uiConfig} firebaseAuth={getAuth()} />
-            </div>
-        </>
-    }
-
-    return <></>;
-});
+import SignIn from "@/auth/SignIn";
 
 
 export function AppBarProfile() {
@@ -67,19 +31,17 @@ export function AppBarProfile() {
     }
 
     const onSignOutClicked = async () => {
+        const {getAuth} = await import('firebase/auth');
         handleClose();
         await getAuth().signOut();
     }
     const onUserProfileClicked = useCallback(() => handleClose(), []);
-    const onShowOptions = () => setShowLanguageOptions(true);
     const toggleAppMode = () => setMode(mode === 'light' ? 'dark' : 'light');
 
     return <>
         <IconButton onClick={handleMenu} edge="end" size="large" aria-label="Profile Menu">
-            { /*@ts-ignore*/ }
-            {auth.currentUser ? <Avatar src={auth.currentUser.photoURL} alt={auth.currentUser.displayName} /> : <Avatar/>}
+            {auth.currentUser ? <Avatar src={auth.currentUser.photoURL ?? undefined} alt={auth.currentUser.displayName ?? ''} /> : <Avatar/>}
         </IconButton>
-
 
         <Menu
             anchorEl={anchorEl}
@@ -125,3 +87,5 @@ export function AppBarProfile() {
         </Menu>
     </>
 }
+
+export default memo(AppBarProfile);

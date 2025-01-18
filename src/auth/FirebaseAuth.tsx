@@ -1,28 +1,26 @@
 import {useEffect, useRef, useState} from 'react';
 import CircularProgress from "@mui/material/CircularProgress";
 import useAsyncEffect from "use-async-effect";
-import {EmailAuthProvider, onAuthStateChanged, sendEmailVerification} from 'firebase/auth';
+import {EmailAuthProvider, getAuth, onAuthStateChanged, sendEmailVerification} from 'firebase/auth';
 import 'firebaseui/dist/firebaseui.css';
-import {auth} from "firebaseui";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import {app} from "@/firebase";
+import type {auth} from "firebaseui";
 
-interface Props {
+
+const FirebaseAuth = ({uiConfig, className, uiCallback}: {
     // The Firebase UI Web UI Config object.
     // See: https://github.com/firebase/firebaseui-web#configuration
-    uiConfig: auth.Config;
+    uiConfig: auth.Config,
     // Callback that will be passed the FirebaseUi instance before it is
     // started. This allows access to certain configuration options such as
     // disableAutoSignIn().
-    uiCallback?(ui: auth.AuthUI): void;
+    uiCallback?(ui: auth.AuthUI): void,
     // The Firebase App auth instance to use.
-    firebaseAuth: any; // As firebaseui-web
-    className?: string;
-}
-
-
-const FirebaseAuth = ({uiConfig, firebaseAuth, className, uiCallback}: Props) => {
+    className?: string,
+}) => {
     const [firebaseui, setFirebaseui] = useState<typeof import('firebaseui') | null>(null);
     const [userSignedIn, setUserSignedIn] = useState(false);
     const [isVerified, setIsVerified] = useState(true);
@@ -39,6 +37,7 @@ const FirebaseAuth = ({uiConfig, firebaseAuth, className, uiCallback}: Props) =>
     useEffect(() => {
         if (firebaseui === null )
             return;
+        const firebaseAuth = getAuth(app);
 
         // Get or Create a firebaseUI instance.
         const firebaseUiWidget = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebaseAuth);
@@ -49,11 +48,17 @@ const FirebaseAuth = ({uiConfig, firebaseAuth, className, uiCallback}: Props) =>
         const unregisterAuthObserver = onAuthStateChanged(firebaseAuth, user => {
             if (!user && userSignedIn)
                 firebaseUiWidget.reset();
-            if( user && user.providerData?.[0]?.providerId === EmailAuthProvider.PROVIDER_ID && !user.emailVerified ) {
+
+            const signInProvider = user?.providerData?.[0]?.providerId;
+            const isVerified = Boolean(
+                user && signInProvider && (user.emailVerified || signInProvider !== EmailAuthProvider.PROVIDER_ID)
+            );
+
+            if( user && !isVerified ) {
                 sendEmailVerification(user).then(() => console.log('Email verification sent!'));
                 firebaseUiWidget.reset();
             }
-            setIsVerified(!!user?.emailVerified);
+            setIsVerified(isVerified);
             setUserSignedIn(!!user);
         });
 
@@ -64,8 +69,8 @@ const FirebaseAuth = ({uiConfig, firebaseAuth, className, uiCallback}: Props) =>
         // Render the firebaseUi Widget.
         // @ts-ignore
         firebaseUiWidget.start(elementRef.current, {...uiConfig, callbacks: {uiShown() {
-            setLoading(false);
-        }}});
+                    setLoading(false);
+                }}});
 
         return () => {
             unregisterAuthObserver();

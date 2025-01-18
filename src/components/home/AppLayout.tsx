@@ -6,11 +6,11 @@ import Footer from "@/components/home/Footer";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 
-function AppLayout({children, appBarColor}: {
-    children: ReactNode, appBarColor?: string,
+function AppLayout({children}: {
+    children: ReactNode,
 }) {
     return <>
-        <ProfileAppBar color={appBarColor} />
+        <ProfileAppBar />
         <Box minHeight="100vh">
             {children}
         </Box>
