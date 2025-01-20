@@ -2,7 +2,7 @@ import {ReactElement, cloneElement, memo} from 'react';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 
-function ElevationScroll({children}: {children: ReactElement}) {
+function ElevationScroll({children}: {children: ReactElement<{elevation?: number}>}) {
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 100,
