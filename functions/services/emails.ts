@@ -1,24 +1,19 @@
 import {Timestamp} from 'firebase-admin/firestore';
 import {getAuth} from 'firebase-admin/auth';
 import {Resend} from 'resend';
-import {CreateEmailOptions} from 'resend/build/src/emails/interfaces/create-email-options.interface';
 import Welcome from '../emails/templates/welcome';
 import {db} from './db';
-import {CreateEmailResponse} from 'resend/build/src/emails/interfaces';
+import type {CreateEmailOptions, CreateEmailResponse, ErrorResponse as ErrorResponseType} from 'resend';
 
 
-interface ErrorResponse {
-    statusCode: number;
-    name: string;
-    message: string;
-}
+type ErrorResponse = ErrorResponseType & {statusCode: number};
 type ResendResponse = CreateEmailResponse | ErrorResponse;
 
 
 export const sendEmail = async (options: CreateEmailOptions) => {
     console.log(`sendEmail: ${options}`);
     const resend = new Resend(process.env.RESEND_API_KEY!);
-    const data = await resend.sendEmail(options) as ResendResponse;
+    const data = await resend.emails.send(options) as ResendResponse;
     console.log('Data after sending:', data);
 
     if ('statusCode' in data && data.statusCode !== 200)
@@ -65,7 +60,7 @@ export const setupWelcomeSequence = async (userId: string) => {
 export const sendScheduledEmails = async (retries: number = 10) => {
     console.log('sendScheduledEmails');
     const toSend = await db.emailQueue.where(
-        'sendAt', '<=', Timestamp.fromDate(new Date())
+        'sendAt', '<=', Timestamp.fromDate(new Date()),
     ).get();
 
     console.log(`sending ${toSend.docs.length} emails`);

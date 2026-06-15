@@ -1,4 +1,6 @@
-import * as functions from 'firebase-functions';
+import {onRequest} from 'firebase-functions/https';
+import {onDocumentCreated} from 'firebase-functions/firestore';
+import {onSchedule} from 'firebase-functions/scheduler';
 import {getApps, initializeApp, applicationDefault} from 'firebase-admin/app';
 
 
@@ -6,23 +8,29 @@ if (getApps().length === 0)
     initializeApp({credential: applicationDefault()});
 
 
-export const helloWorld = functions.https.onRequest((req, res) => {
+// HTTPS functions are hosted at https://REGION-PROJECT_ID.cloudfunctions.net/FUNCTION_NAME
+export const hello = onRequest({
+    maxInstances: 1,
+    invoker: 'public',
+}, (req, res) => {
     console.log('Hello logs!');
     res.send('Hello from Firebase!');
 });
 
-export const onUserUpdated = functions.firestore
-    .document('users/{userId}')
-    .onWrite(async (change, context) => {
-        const {setupWelcomeSequence} = await import('./services/emails');
-        // if it's a new user
-        if (!change.before.exists && change.after.exists)
-            await setupWelcomeSequence(context.params.userId);
-    });
+export const onUserCreated = onDocumentCreated({
+    document: 'users/{userId}',
+    maxInstances: 10,
+}, async (event) => {
+    const {setupWelcomeSequence} = await import('./services/emails');
+    console.log(`onUserCreated: ${event.params.userId} -> ${event?.data?.data()} => setting up welcome sequence`);
+    await setupWelcomeSequence(event.params.userId);
+});
 
-export const scheduledEmailSend = functions.pubsub
-    .schedule('every minute')
-    .onRun(async () => {
-        const {sendScheduledEmails} = await import('./services/emails');
-        return sendScheduledEmails();
-    });
+export const scheduledEmailSend = onSchedule({
+    schedule: 'every minute',
+    timeoutSeconds: 540,
+    memory: '1GiB',
+}, async () => {
+    const {sendScheduledEmails} = await import('./services/emails');
+    return sendScheduledEmails();
+});

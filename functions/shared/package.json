@@ -1,0 +1,5 @@
+{
+  "name": "shared",
+  "description": "shared utilities for the whole project",
+  "version": "1.0.0"
+}

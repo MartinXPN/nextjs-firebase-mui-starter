@@ -7,8 +7,8 @@ import Link from "@/components/Link";
 function AppBarHome({onClick}: {onClick?: () => any}) {
     return <>
         <Button onClick={onClick} component={Link} href="/" color="inherit" size="large" sx={{textTransform: 'none', marginRight: 2}}>
-            <Typography fontWeight="bold" sx={{ml: 1}} noWrap>Next.js</Typography>
-            <Typography fontWeight="bold" sx={{display: {xs: 'none', sm: 'flex'}}} noWrap>&nbsp;+ Firebase + MUI</Typography>
+            <Typography sx={{fontWeight: 'bold', ml: 1}} noWrap>Next.js</Typography>
+            <Typography sx={{fontWeight: 'bold', display: {xs: 'none', sm: 'flex'}}} noWrap>&nbsp;+ Firebase + MUI</Typography>
         </Button>
     </>
 }

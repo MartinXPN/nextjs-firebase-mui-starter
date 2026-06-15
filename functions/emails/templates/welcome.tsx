@@ -1,7 +1,7 @@
+import React from 'react';
 import {
     Body, Container, Head, Hr, Html, Img, Preview, Section, Text, Link,
-} from '@react-email/components';
-import * as React from 'react';
+} from 'react-email';
 
 
 export const WelcomeEmail = ({name}: {name?: string}) => (

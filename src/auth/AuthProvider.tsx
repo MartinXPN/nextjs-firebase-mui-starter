@@ -1,19 +1,19 @@
 'use client';
 
-import {ReactNode, useCallback, useState} from "react";
+import {ReactNode, useEffectEvent, useState} from "react";
+import {useRouter} from "next/navigation";
+import posthog from 'posthog-js';
+import useAsyncEffect from "@/hooks/asynceffect";
+import {updateUserInfo} from "@/services/users";
 import {AuthContext, AuthUser} from "./AuthContext";
 import type {User as FirebaseUser} from "firebase/auth";
-import {updateUserInfo} from "@/services/users";
-import {getAnalytics, setUserId} from "firebase/analytics";
-import {useRouter} from "next/navigation";
-import useAsyncEffect from "use-async-effect";
 
 
 function AuthProvider({defaultUser, children}: { defaultUser: AuthUser | null, children: ReactNode }) {
     const router = useRouter();
     const [user, setUser] = useState<AuthUser | null>(defaultUser);
 
-    const handleIdTokenChanged = useCallback(async (firebaseUser: FirebaseUser | null) => {
+    const handleIdTokenChanged = useEffectEvent(async (firebaseUser: FirebaseUser | null) => {
         const providerData = firebaseUser?.providerData && firebaseUser.providerData[0];
         console.log('token changed:', firebaseUser);
         console.log('providerData:', providerData);
@@ -28,10 +28,11 @@ function AuthProvider({defaultUser, children}: { defaultUser: AuthUser | null, c
         if (!firebaseUser) {
             console.log('No firebase user... Logging out...');
             if (!user)
-                return null;
+                return;
             console.log('logging out...');
             setUser(null);
             await fetch('/api/logout', {method: 'GET'});
+            console.log('logged out');
             return router.refresh();
         }
 
@@ -58,25 +59,33 @@ function AuthProvider({defaultUser, children}: { defaultUser: AuthUser | null, c
             claims: tokenResult.claims,
             signInProvider: providerData?.providerId || null,
             phoneNumber: firebaseUser.phoneNumber || null,
+            authToken: tokenResult.token || null,
         });
 
         console.log('Updating the page...');
         router.refresh();
-    }, [router, user?.emailVerified, user?.id, setUser]);
+    });
 
 
     useAsyncEffect(async () => {
         const {getAuth, onIdTokenChanged} = await import('firebase/auth');
         const auth = getAuth();
         return onIdTokenChanged(auth, handleIdTokenChanged);
-    }, unsubscribe => unsubscribe && unsubscribe(), [handleIdTokenChanged]);
+    }, unsubscribe => unsubscribe && unsubscribe(), []);
 
 
     useAsyncEffect(async () => {
-        if( user?.id )
-            await updateUserInfo(user.id, user.displayName ?? undefined, user.photoURL ?? undefined);
+        if (!user?.id)
+            return posthog.reset();
 
-        setUserId(getAnalytics(), user?.id ?? null);
+        await updateUserInfo(user.id, user.displayName ?? undefined, user.photoURL ?? undefined);
+        posthog.identify(user?.id, {
+            userId: user?.id,
+            name: user?.displayName,
+            email: user?.email,
+            emailVerified: user?.emailVerified,
+            signInProvider: user?.signInProvider,
+        });
     }, [user?.id, user?.displayName, user?.photoURL]);
 
     const isVerified = Boolean(

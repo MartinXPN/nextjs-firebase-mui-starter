@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from 'next/server';
 import {authMiddleware} from "next-firebase-auth-edge";
 
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     console.log('pathname:', pathname);
 
@@ -45,6 +45,6 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         // Skip all internal paths (_next, _vercel, assets, etc.)
-        '/((?!_next|_vercel|opengraph|monitoring|speed-insights|fonts|assets|sitemap|favicon.ico|robots.txt|manifest.json|logo192.png|logo512.png|logo.svg|next.svg|vercel.svg).*)',
+        '/((?!_next|_vercel|opengraph|monitoring|speed-insights|phg|fonts|assets|sitemap|favicon.ico|robots.txt|manifest.json|logo192.png|logo512.png|logo.svg|next.svg|vercel.svg).*)',
     ],
 }

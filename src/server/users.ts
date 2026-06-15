@@ -1,10 +1,10 @@
 import {cache} from "react";
-import {UserInfo} from "models/users";
-import {db} from "./db";
+import adminDb from "./admin-db";
+import type {UserInfo} from "models/users";
 
 
 export const getUser = cache(async (userId: string): Promise<UserInfo | null> => {
-    const user = (await db.user(userId).get()).data();
+    const user = (await adminDb.user(userId).get()).data();
     console.log('Got user:', user);
     return user ?? null;
 });

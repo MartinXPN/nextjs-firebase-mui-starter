@@ -7,9 +7,10 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "esModuleInterop": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "types": ["node", "jest"],
     "isolatedModules": true,
     "jsx": "react",
     "noImplicitReturns": true,
@@ -19,6 +20,6 @@
     "rootDirs": ["services", "emails", "models"],
   },
   "compileOnSave": true,
-  "include": ["index.ts" ,"services/**/*", "models/**/*", "emails/**/*", "test/**/*", "generators/**/*", ".eslintrc.cjs"],
-  "exclude": ["node_modules", "**/*.spec.ts", "firebase-export-*"]
+  "include": ["index.ts" ,"services/**/*.ts", "models/**/*.ts", "shared/**/*.ts", "test/**/*.ts", "generators/**/*.ts", "emails/**/*.tsx"],
+  "exclude": ["node_modules", "**/*.spec.ts", "lib", "firebase-export-*"]
 }

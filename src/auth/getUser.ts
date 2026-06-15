@@ -33,5 +33,6 @@ export const getUser = cache(async (cookies: RequestCookies | ReadonlyRequestCoo
         photoURL: decodedToken.picture ?? null,
         claims: filterStandardClaims(decodedToken),
         signInProvider: decodedToken.firebase.sign_in_provider,
+        authToken: tokens.token,
     }
 });

@@ -1,7 +1,7 @@
 import {ReactNode} from "react";
 import {Metadata} from "next";
 import {cookies} from 'next/headers';
-import Script from "next/script";
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 
 import ThemeProvider from "@/theme/ThemeProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -39,27 +39,24 @@ export default async function RootLayout({children}: {
     console.log(`layout default user: ${defaultUser?.id} with ${defaultUser?.signInProvider} provider`);
 
     return <>
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
         <head>
             <meta content="width=device-width, initial-scale=1" name="viewport"/>
             <link rel="icon" href="/favicon.ico"/>
             <meta property="og:site_name" content={title}/>
-
-            {/* Clarity Script (for user-event tracking) - paste the script below */}
-            <Script id="clarity-script" strategy="lazyOnload">{`
-            `}</Script>
         </head>
 
-        <body>
-        <ThemeProvider>
-        <ErrorBoundary>
-        <AuthProvider defaultUser={defaultUser}>
-        <AppLayout>
-            {children}
-        </AppLayout>
-        </AuthProvider>
-        </ErrorBoundary>
-        </ThemeProvider>
+        <body suppressHydrationWarning>
+            <InitColorSchemeScript modeStorageKey="theme-mode" defaultMode="light" attribute="class" />
+            <ThemeProvider>
+            <ErrorBoundary>
+            <AuthProvider defaultUser={defaultUser}>
+            <AppLayout>
+                {children}
+            </AppLayout>
+            </AuthProvider>
+            </ErrorBoundary>
+            </ThemeProvider>
         </body>
         </html>
     </>

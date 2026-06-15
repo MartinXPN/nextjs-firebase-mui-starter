@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import CircularProgress from "@mui/material/CircularProgress";
-import useAsyncEffect from "use-async-effect";
+import useAsyncEffect from "@/hooks/asynceffect";
 import {EmailAuthProvider, getAuth, onAuthStateChanged, sendEmailVerification} from 'firebase/auth';
 import 'firebaseui/dist/firebaseui.css';
 import Typography from "@mui/material/Typography";
@@ -81,9 +81,9 @@ const FirebaseAuth = ({uiConfig, className, uiCallback}: {
 
     return <div className={className} ref={elementRef}>
         {loading && <CircularProgress />}
-        {userSignedIn && !isVerified && <Box paddingX={1}>
-            <Typography marginTop={2} color="error" fontWeight="bold">Please verify your email to continue</Typography>
-            <Typography marginBottom={4} color="text.secondary">Open your the mail we sent you and click the link to verify your account.</Typography>
+        {userSignedIn && !isVerified && <Box sx={{paddingX: 1}}>
+            <Typography color="error" sx={{marginTop: 2, fontWeight: 'bold'}}>Please verify your email to continue</Typography>
+            <Typography color="text.secondary" sx={{marginBottom: 4}}>Open your the mail we sent you and click the link to verify your account.</Typography>
             <Divider />
         </Box>}
     </div>

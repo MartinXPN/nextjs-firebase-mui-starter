@@ -52,7 +52,7 @@ function ProfileEditorForm({user, stopEditing}: {
                     inputRef={ref} {...field} sx={{maxWidth: '100%'}}/>
             )}/>
 
-            <Stack direction="row" spacing={1} paddingY={1}>
+            <Stack direction="row" spacing={1} sx={{paddingY: 1}}>
                 <Button variant="outlined" onClick={handleSubmit(onSubmit)}>Save</Button>
                 <Button variant="outlined" onClick={onCancel}>Cancel</Button>
             </Stack>

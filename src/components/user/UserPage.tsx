@@ -58,8 +58,8 @@ function UserName({user}: {user: User}) {
     const onEditClicked = () => setEditing(true);
     const onCancelClicked = () => setEditing(false);
 
-    return <Stack direction="row" alignItems="top" alignContent="top" paddingTop="10px" spacing={2}>
-        {!editing && <Typography variant="h4" fontWeight="bold" width={200} overflow="hidden" display="-webkit-box" sx={{WebkitBoxOrient: 'vertical', WebkitLineClamp: 2}}>{user.displayName}</Typography>}
+    return <Stack direction="row" sx={{paddingTop: '10px', alignItems: 'top', alignContent: 'top'}} spacing={2}>
+        {!editing && <Typography variant="h4" sx={{fontWeight: 'bold', width: 200, overflow: 'hidden', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2}}>{user.displayName}</Typography>}
         {!editing && auth.currentUserId === user.id && <Box><IconButton color="inherit" onClick={onEditClicked}><Edit /></IconButton></Box>}
         {editing && <ProfileEditor user={user} stopEditing={onCancelClicked} />}
     </Stack>

@@ -2,11 +2,11 @@
 
 import {memo, ReactNode} from "react";
 import {Roboto} from "next/font/google";
+import type {} from '@mui/material/themeCssVarsAugmentation';
 import {createTheme, ThemeProvider as MuiThemeProvider} from "@mui/material/styles";
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import CssBaseline from "@mui/material/CssBaseline";
 import ColorModeContextProvider from "@/theme/ColorModeContext";
-import {AppRouterCacheProvider} from "@mui/material-nextjs/v15-appRouter";
+import {AppRouterCacheProvider} from "@mui/material-nextjs/v16-appRouter";
 
 
 const font = Roboto({weight: ['300', '400', '500', '700'], subsets: ['latin']});
@@ -58,12 +58,11 @@ export const theme = createTheme({
 function ThemeProvider({children}: {children: ReactNode}) {
     return <>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <InitColorSchemeScript attribute="class" />
-            <MuiThemeProvider theme={theme}>
-            <ColorModeContextProvider>
-                <CssBaseline />
-                {children}
-            </ColorModeContextProvider>
+            <MuiThemeProvider modeStorageKey="theme-mode" defaultMode="light" theme={theme}>
+                <ColorModeContextProvider>
+                    <CssBaseline />
+                    {children}
+                </ColorModeContextProvider>
             </MuiThemeProvider>
         </AppRouterCacheProvider>
     </>

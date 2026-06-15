@@ -52,7 +52,7 @@ export default function ProfileAppBar() {
                 <Button component={Link} href="/about" size="large" color="inherit" sx={{textTransform: 'none'}}>About</Button>
             </Box>
 
-            <Box flexGrow={1} />
+            <Box sx={{flexGrow: 1}} />
             <AppBarProfile />
         </Toolbar>
         </nav>

@@ -1,9 +1,7 @@
 import {getApps, initializeApp, applicationDefault} from 'firebase-admin/app';
-import {CollectionReference, DocumentReference, getFirestore, QueryDocumentSnapshot} from 'firebase-admin/firestore';
-
-import {UserInfo} from '../models/users';
-import {EmailQueue} from '../models/emails';
-
+import {getFirestore} from 'firebase-admin/firestore';
+import {createFirestoreRefs} from '../shared/firestore-refs';
+import type {CollectionReference, DocumentReference, QueryDocumentSnapshot} from 'firebase-admin/firestore';
 
 // Initialize only once
 if (getApps().length === 0)
@@ -12,30 +10,24 @@ const firestore = getFirestore();
 firestore.settings({ignoreUndefinedProperties: true});
 
 // Add ids when getting the data and removing when sending it
-const converter = <T>() => ({
-    toFirestore: (data: T) => {
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {id, ...res} = data;
-        return res;
-    },
-    fromFirestore: (snap: QueryDocumentSnapshot) => Object.assign(snap.data(), {id: snap.id}) as unknown as T,
+type WithId = { id: string };
+const converter = <T extends WithId>() => ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    toFirestore: ({id: _id, ...data}: T) => data,
+    fromFirestore: (snap: QueryDocumentSnapshot) => ({...snap.data(), id: snap.id}) as T,
 });
 
-function dataPoint<T>(collectionPath: string): CollectionReference<T>;
-function dataPoint<T>(collectionPath: string, docPath: string): DocumentReference<T>;
-// eslint-disable-next-line require-jsdoc
-function dataPoint<T>(collectionPath: string, docPath?: string) {
+function dataPoint<T extends WithId>(collectionPath: string): CollectionReference<T>;
+function dataPoint<T extends WithId>(collectionPath: string, docPath: string): DocumentReference<T>;
+// eslint-disable-next-line
+function dataPoint<T extends WithId>(collectionPath: string, docPath?: string) {
     const res = firestore.collection(collectionPath).withConverter(converter<T>());
     return docPath ? res.doc(docPath) : res;
 }
 
 
 /* eslint-disable max-len, @typescript-eslint/explicit-module-boundary-types */
-const db = {
-    users: dataPoint<UserInfo>('users'),
-    user: (userId: string) => dataPoint<UserInfo>('users', userId),
-    emailQueue: dataPoint<EmailQueue>('emailQueue'),
+export const db = {
+    ...createFirestoreRefs<'admin'>(dataPoint),
 };
 /* eslint-enable max-len, @typescript-eslint/explicit-module-boundary-types */
-export {db};

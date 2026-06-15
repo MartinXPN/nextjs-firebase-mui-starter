@@ -1,8 +1,7 @@
 import {getDoc, onSnapshot, setDoc} from "firebase/firestore";
 import {getAuth, updateProfile} from 'firebase/auth';
-
 import {db} from "./db";
-import {UserInfo} from "models/users";
+import type {UserInfo} from "models/users";
 
 
 export const onUserInfoChanged = (userId: string, onChanged: (user: UserInfo | null) => void) => {

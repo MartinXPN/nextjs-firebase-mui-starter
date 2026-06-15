@@ -11,7 +11,7 @@ function AppLayout({children}: {
 }) {
     return <>
         <ProfileAppBar />
-        <Box minHeight="100vh">
+        <Box sx={{minHeight: '100dvh'}}>
             {children}
         </Box>
         <Divider />

@@ -7,21 +7,21 @@ import Box from "@mui/material/Box";
 export default function Page() {
     return <>
         <main>
-            <Typography textAlign="center" variant="h1">
+            <Typography sx={{textAlign: 'center'}} variant="h1">
                 Next.js + Firebase + MUI Starter Project
             </Typography>
-            <Box display="flex" justifyContent="center" alignItems="center" padding={8}>
+            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 8}}>
                 <Image src="/next.svg" alt="Next.js Logo" width={180} height={37} priority/>
             </Box>
 
             <Container maxWidth="md">
-                <Typography fontWeight="bold">
+                <Typography sx={{fontWeight: 'bold'}}>
                     - Find the source code on <Link href="https://github.com/MartinXPN/nextjs-firebase-mui-starter">GitHub</Link>.
                 </Typography>
-                <Typography fontWeight="bold">
+                <Typography sx={{fontWeight: 'bold'}}>
                     - Edit and modify the source code to fit your needs.
                 </Typography>
-                <Typography fontWeight="bold">
+                <Typography sx={{fontWeight: 'bold'}}>
                     - Star the project on GitHub if you like it.
                 </Typography>
             </Container>

@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import type {ParsedToken} from "@firebase/auth";
+import type {ParsedToken} from "firebase/auth";
 
 export type AuthUser = {
     id: string | null;
@@ -10,6 +10,7 @@ export type AuthUser = {
     photoURL: string | null;
     claims: ParsedToken;
     signInProvider: string | null;
+    authToken: string | null;
 }
 
 type AuthContextProps = {

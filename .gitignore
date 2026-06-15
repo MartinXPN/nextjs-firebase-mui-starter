@@ -11,6 +11,7 @@ tsconfig.tsbuildinfo
 
 # Next JS
 .next/
+next-env.d.ts
 
 
 # IntelliJ
@@ -63,6 +64,9 @@ typings/
 # Optional npm cache directory
 .npm
 
+# Optional pnpm cache directory
+.pnpm-store/
+
 # Optional eslint cache
 .eslintcache
 
@@ -107,6 +111,3 @@ firebase/firebase-key.json
 
 # IDE specific
 .vscode
-
-# Sentry Config File
-.sentryclirc

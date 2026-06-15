@@ -1,25 +1,17 @@
 'use client';
-import {getApp, getApps, initializeApp} from "firebase/app"
-import {initializeFirestore} from "firebase/firestore";
-import {initializeAnalytics} from 'firebase/analytics';
+import {getApp, getApps, initializeApp} from "firebase/app";
+import {initializeFirestore, getFirestore} from "firebase/firestore";
+import prodConfig from "@/firebase-config";
+import type {FirebaseApp} from "firebase/app";
+import type {Firestore} from "firebase/firestore";
 
-const prodConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-};
-
-export const app = !getApps().length ? initializeApp(prodConfig) : getApp();
-export const firestore = initializeFirestore(app, {ignoreUndefinedProperties: true});
-console.log('reconfigured the db to ignore undefined values', firestore.type);
-
-
-// If we're on the client-side
-if (app.name && typeof window !== 'undefined') {
-    const analytics = initializeAnalytics(app);
-    console.log('analytics:', analytics);
+export let app: FirebaseApp, firestore: Firestore;
+if (!getApps().length) {
+    app = initializeApp(prodConfig);
+    firestore = initializeFirestore(app, {ignoreUndefinedProperties: true});
+    console.log('Initialized client firestore to ignore undefined properties', firestore.type);
+}
+else {
+    app = getApp();
+    firestore = getFirestore(app);
 }
