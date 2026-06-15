@@ -11,6 +11,19 @@ When working on a startup, the speed of iteration is key. The requirements chang
 
 During the last two years (almost), we have experimented with many modern technologies while building [Profound Academy](https://profound.academy). So, in this blog post, I'd like to present the whole tech stack that enables building quickly, while having a highly maintainable codebase, scalable infrastructure, and a great user experience. We'll cover everything from Authentication to UI, we'll talk about the backend, hosting, testing, and much more!
 
+## Agents, Skills, and MCP servers
+Keep the `AGENTS.md` or `CLAUDE.md` file as small as possible. It should only contain things that you keep repeating in every conversation with the agent.
+Large `AGENTS.md` files can actually hurt the performance of an LLM and make it less useful.
+
+For skills, it's best to only install the skills relevant to the current conversation and then remove them when the conversation is over.
+Less is more when it comes to the number of skills installed, and the size of the `AGENTS.md` file.
+Here are several skills that can be useful:
+- UI/UX skill: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+- React/NextJS skills: https://github.com/vercel-labs/agent-skills
+- Firebase skills: https://github.com/firebase/agent-skills
+- PostHog skills: https://github.com/posthog/skills
+
+
 ## Frontend
 As the core frontend technology, [React](https://react.dev) stands out as the top pick for many full-stack projects. While there are other options like Vue or Svelte, React shines because of its vast range of libraries. This big ecosystem makes it easier to add new features and change things fast, which is why it's a favorite for many developers.
 
@@ -134,9 +147,9 @@ COOKIE_SECRET_PREVIOUS=
 NEXT_PUBLIC_COOKIE_SECURE=false # set to true in HTTPS environment
 
 # PostHog (analytics, product monitoring, and sourcemaps)
-NEXT_PUBLIC_POSTHOG_KEY=
-POSTHOG_API_KEY=
-POSTHOG_PROJECT_ID=
+NEXT_PUBLIC_POSTHOG_KEY=phc_
+POSTHOG_API_KEY=phx_
+POSTHOG_PROJECT_ID=123456
 
 # Firebase Functions
 RESEND_API_KEY=
@@ -172,12 +185,15 @@ project
 │   ├── generators  (generators for models to speed up testing)
 │   ├── models      (all the models for both the front-end and the backend)
 │   ├── services    (the main functionality of each endpoint)
+│   ├── shared      (shared code between the whole app, including Firebase Functions and the Next.js app)
 │   ├── test        (includes tests for the serverless functions)
 │   └── index.ts    (all the Firebase functions endpoints)
-├── public          (static assets, etc)
+├── public          (static assets, etc.)
 └── src             (the main Next.js app source code)
-    ├── app         (Next.js app router)
-    ├── server      (Next.js layer that works on the server side)
-    ├── components  (React components)
-    └── services    (includes client-side logic for reading and writing to firestore, connecting to firebase functions, uploading files, etc)
+├── app         (Next.js app router)
+├── auth        (Everything related to authentication)
+├── components  (React components)
+├── hooks       (React hooks. Note that we don't create hooks for all the services (like useUser). We only have global hooks like `useAsyncEffect` or `useStickyState`.)
+├── server      (Next.js layer that works on the server side)
+└── services    (includes client-side logic for reading/writing to firestore, connecting to firebase functions, uploading files, etc.)
 ```
