@@ -4,8 +4,9 @@ import {cookies} from 'next/headers';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 
 import ThemeProvider from "@/theme/ThemeProvider";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import ErrorBoundary from "@/components/common/ErrorBoundary";
 import AppLayout from "@/components/home/AppLayout";
+import ClientCookiesProvider from "@/components/common/ClientCookieContext";
 import '@/polyfills';
 import '@/firebase';
 import '@/app/globals.css';
@@ -38,6 +39,12 @@ export default async function RootLayout({children}: {
     const defaultUser = await getUser(await cookies());
     console.log(`layout default user: ${defaultUser?.id} with ${defaultUser?.signInProvider} provider`);
 
+    const clientCookies = (await cookies()).getAll().filter(({name}) => name.startsWith('client')).reduce((acc, cookie) => {
+        acc[cookie.name] = cookie.value;
+        return acc;
+    }, {} as Record<string, string>);
+    console.log('layout clientCookies:', clientCookies);
+
     return <>
         <html lang="en" suppressHydrationWarning>
         <head>
@@ -50,11 +57,13 @@ export default async function RootLayout({children}: {
             <InitColorSchemeScript modeStorageKey="theme-mode" defaultMode="light" attribute="class" />
             <ThemeProvider>
             <ErrorBoundary>
+            <ClientCookiesProvider cookieData={clientCookies}>
             <AuthProvider defaultUser={defaultUser}>
             <AppLayout>
                 {children}
             </AppLayout>
             </AuthProvider>
+            </ClientCookiesProvider>
             </ErrorBoundary>
             </ThemeProvider>
         </body>

@@ -1,7 +1,7 @@
 import {memo} from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import Link from "@/components/Link";
+import Link from "@/components/common/Link";
 import SocialLinks from "./SocialLinks";
 
 

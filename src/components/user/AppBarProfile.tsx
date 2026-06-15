@@ -11,7 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Menu from '@mui/material/Menu';
 import {AuthContext} from "@/auth/AuthContext";
-import Link from "@/components/Link";
+import Link from "@/components/common/Link";
 import {ColorModeContext} from "@/theme/ColorModeContext";
 import SignIn from "@/auth/SignIn";
 

@@ -1,6 +1,6 @@
 import {memo} from "react";
 import Grid from "@mui/material/Grid";
-import Link from "@/components/Link";
+import Link from "@/components/common/Link";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";

@@ -90,9 +90,8 @@ As the whole backend code sits on Firebase (Google Cloud), the frontend code is 
 
 ## Analytics and Monitoring
 Knowing your users and how they use your product is invaluable. It can save weeks or sometimes even months of development time helping prioritize the right things. The right monitoring can help improve the user experience by fixing common bugs and issues.
-* For general analytics, we use [Firebase Analytics](https://firebase.google.com/docs/analytics), which is a wrapper around Google Analytics.
-* For error reporting and monitoring, we use [Sentry](https://sentry.io) which integrates well with Next.js.
-* For usage insights, we use [Microsoft Clarity](https://clarity.microsoft.com), which provides session replays, heatmaps, and aggregate user activity statistics.
+
+For general analytics and product monitoring, we use [PostHog](https://posthog.com), including analytics, session replay, heatmaps, exception capture, logs, and production sourcemaps.
 
 All of these help a lot in improving the product and really knowing your users. Although there is nothing like [directly talking to them](https://youtu.be/z1iF1c8w5Lg).
 
@@ -134,18 +133,13 @@ COOKIE_SECRET_CURRENT=
 COOKIE_SECRET_PREVIOUS=
 NEXT_PUBLIC_COOKIE_SECURE=false # set to true in HTTPS environment
 
-# Secrets used to sign cookies.
-COOKIE_SECRET_CURRENT=
-COOKIE_SECRET_PREVIOUS=
-NEXT_PUBLIC_COOKIE_SECURE=false # set to true in HTTPS environment
+# PostHog (analytics, product monitoring, and sourcemaps)
+NEXT_PUBLIC_POSTHOG_KEY=
+POSTHOG_API_KEY=
+POSTHOG_PROJECT_ID=
 
 # Firebase Functions
 RESEND_API_KEY=
-
-# Sentry (error reporting and monitoring)
-NEXT_PUBLIC_SENTRY_DSN=
-NEXT_PUBLIC_SENTRY_ORG=
-NEXT_PUBLIC_SENTRY_PROJECT=
 
 # Local development
 HOST=local
@@ -157,37 +151,33 @@ GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/firebase-test-key.json
 
 ## Running the project
 Available scripts include:
-* `yarn dev` Runs the app in the development mode
-* `yarn build` Builds the app for production
-* `yarn start` Starts the app in production mode
-* `yarn emulate` Emulates the whole Firebase stack locally
+* `pnpm dev` Runs the app in the development mode
+* `pnpm build` Builds the app for production
+* `pnpm start` Starts the app in production mode
+* `pnpm emulate` Emulates the whole Firebase stack locally. On first run, it exports emulator data to `./test_data`; on later runs, it imports from that directory.
+* `pnpm --dir functions test` Runs the Firebase Functions test suite
 * `firebase deploy` Deploys the Firebase project to production (Functions, Firestore, and rules)
-* `firebase deploy --only hosting` Deploys the Rect app in the `build` folder to production
-* `yarn update:models` Updates the models in the Next.js app from `functions/models`
+* `firebase deploy --only hosting` Deploys the Next.js app to Firebase Hosting
 * `lsof -t -i tcp:5000 | xargs kill &&  lsof -t -i tcp:5001 | xargs kill &&  lsof -t -i tcp:9099 | xargs kill &&  lsof -t -i tcp:8080 | xargs kill &&  lsof -t -i tcp:9199 | xargs kill &&  lsof -t -i tcp:8087 | xargs kill # firebase kill all emulators` Kills all firebase emulators and frees up ports
 
 ## Project structure
-The project is organized as a mono-repo that includes both the front-end (React app) and the backend-end (Firebase serverless functions)
+The project is organized as a mono-repo that includes both the front-end (Next.js app) and the backend-end (Firebase serverless functions)
 in one repository. Therefore, some things like models (schemas) are shared between those two major components to avoid replication.
 
 ```markdown
 project
-|
-|-> firebase        (includes Firebase-specific files like Storage and Firestore rules and Firestore indexes)
-|-> functions       (firebase serverless functions)
-    |-> emails      (react-email templates)
-    |-> generators  (generators for models to speed up testing)
-    |-> models      (all the models for both the front-end and the backend)
-    |-> services    (the main functionality of each endpoint)
-    |-> test        (includes tests for the serverless functions)
-    |-> index.ts    (all the Firebase functions endpoints)
-|
-|-> public          (static assets, etc)
-|-> src             (the main Next.js app source code)
-    |-> app         (Next.js app router)
-    |-> server      (Next.js layer that works on the server side)
-    |-> components  (React components)
-    |-> ...
-    |-> ...
-    |-> services    (includes logic for reading and writing to firestore, connecting to firebase functions, uploading files, etc)
+├── firebase        (includes Firebase-specific files like Storage and Firestore rules and Firestore indexes)
+├── functions       (firebase serverless functions)
+│   ├── emails      (react-email templates)
+│   ├── generators  (generators for models to speed up testing)
+│   ├── models      (all the models for both the front-end and the backend)
+│   ├── services    (the main functionality of each endpoint)
+│   ├── test        (includes tests for the serverless functions)
+│   └── index.ts    (all the Firebase functions endpoints)
+├── public          (static assets, etc)
+└── src             (the main Next.js app source code)
+    ├── app         (Next.js app router)
+    ├── server      (Next.js layer that works on the server side)
+    ├── components  (React components)
+    └── services    (includes client-side logic for reading and writing to firestore, connecting to firebase functions, uploading files, etc)
 ```

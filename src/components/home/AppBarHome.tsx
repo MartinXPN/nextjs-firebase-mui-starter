@@ -1,7 +1,7 @@
 import {memo} from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Link from "@/components/Link";
+import Link from "@/components/common/Link";
 
 
 function AppBarHome({onClick}: {onClick?: () => any}) {

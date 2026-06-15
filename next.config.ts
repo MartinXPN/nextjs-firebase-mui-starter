@@ -6,7 +6,6 @@ const config: NextConfig = {
     reactCompiler: true,
     productionBrowserSourceMaps: true,
     skipTrailingSlashRedirect: true,
-    transpilePackages: ['@mui/x-charts'],
     experimental: {
         useCache: true,
     },

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Link from "@/components/Link";
+import Link from "@/components/common/Link";
 import Box from "@mui/material/Box";
 
 export default function Page() {
