@@ -1,5 +1,5 @@
 # The Teach-Stack for Building Web Platforms in the AI-Native Era
-![tech-stack-wallpaper](https://github.com/MartinXPN/nextjs-firebase-mui-starter/assets/16335716/e327c878-4b78-4b7d-9caf-67b8d34977e8)
+![tech-stack-wallpaper](https://github.com/user-attachments/assets/8acc6999-8f11-4ada-a891-8547e6f6e556)
 
 This repo is a template described in the blog post 
 [Title](URL).
