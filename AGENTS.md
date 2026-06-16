@@ -5,6 +5,7 @@
 - For large changes, check the documentation first for simpler solutions and alternatives.
 - Avoid redundant error handling as much as possible. We should have as few `try-catch` blocks as possible.
 - Keep the file sizes small. 400+ lines is too large and should probably be broken down into smaller files.
+- Use type imports where possible.
 
 
 ## React Guidelines
@@ -12,6 +13,7 @@
 - Use the latest React hooks like `useEffectEvent`, if necessary.
 - Don't create redundant hooks. Use context instead.
 - Use `useAsyncEffect` instead of `useEffect` for async tasks.
+- Rely on MUI as much as possible. Avoid writing a lot of CSS.
 
 
 ## Firebase Functions

@@ -2,7 +2,6 @@
   "name": "next-firebase-mui-starter",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@11.5.3",
   "scripts": {
     "emulate": "(pnpm --dir functions run build -- --watch) | (firebase emulators:start --import=./test_data --export-on-exit)",
     "dev": "next dev",
