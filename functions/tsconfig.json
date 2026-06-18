@@ -16,10 +16,11 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "lib",
+    "rootDir": ".",
     "target": "esnext",
     "rootDirs": ["services", "emails", "models"],
   },
   "compileOnSave": true,
-  "include": ["index.ts" ,"services/**/*.ts", "models/**/*.ts", "shared/**/*.ts", "test/**/*.ts", "generators/**/*.ts", "emails/**/*.tsx"],
+  "include": ["index.ts", "jest.setup-env.ts", "services/**/*.ts", "models/**/*.ts", "shared/**/*.ts", "test/**/*.ts", "generators/**/*.ts", "emails/**/*.tsx"],
   "exclude": ["node_modules", "**/*.spec.ts", "lib", "firebase-export-*"]
 }

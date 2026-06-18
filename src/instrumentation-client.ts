@@ -8,6 +8,11 @@ const IGNORED_ERROR_PATTERNS = [
     /Missing or insufficient permissions/i,                                 // Firebase Firestore permissions
     /The user aborted a request/i,                                          // Cancelled requests
     /Loading CSS chunk/i,                                                   // Next.js chunk loading
+    /Maximum call stack size exceeded/i,                                    // Ace errors
+    /Cannot read properties of undefined \(reading 'Search'\)/i,            // Ace errors
+    /Cannot read properties of undefined \(reading 'prompt'\)/i,            // Ace errors
+    /Cannot read properties of undefined \(reading 'getSelection'\)/i,      // Ace errors
+    /undefined is not an object \(evaluating 't\.Search'\)/i,               // Ace errors
     /Unexpected token '</i,                                                 // HTML parsing errors
     /expected expression, got '</i,                                         // HTML parsing errors
     /Minified React error #/i,                                              // React errors
@@ -17,7 +22,7 @@ const IGNORED_ERROR_PATTERNS = [
 posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
     api_host: '/phg',
     ui_host: 'https://us.posthog.com',
-    defaults: '2025-05-24',
+    defaults: '2026-05-30',
 
     session_recording: process.env.NODE_ENV === 'development' ? undefined : {
         maskAllInputs: false,

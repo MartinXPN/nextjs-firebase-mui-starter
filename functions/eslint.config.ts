@@ -72,6 +72,7 @@ export default [
             'indent': ['error', 4],
             'max-len': ['error', 120, {ignoreComments: true}],
             'no-multi-spaces': ['error', {ignoreEOLComments: true}],
+            'no-useless-assignment': 'off',
             '@typescript-eslint/ban-ts-comment': 'off',
             '@typescript-eslint/explicit-function-return-type': 'off',
             '@typescript-eslint/no-explicit-any': 'off',

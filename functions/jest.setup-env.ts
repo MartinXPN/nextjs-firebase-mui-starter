@@ -4,10 +4,9 @@ import {config as loadDotenv} from 'dotenv';
 
 const envPath = resolve(process.cwd(), '../.env.local');
 
-if (existsSync(envPath)) {
+if (existsSync(envPath))
     loadDotenv({
         path: envPath,
         override: false,
         quiet: true,
     });
-}
