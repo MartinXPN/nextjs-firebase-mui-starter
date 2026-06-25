@@ -1,8 +1,9 @@
-# The Teach-Stack for Building Web Platforms in the AI-Native Era
+# The Teach Stack for Building Full-Stack Apps in the AI-Agentic Era (2026 Edition)
+
 ![tech-stack-wallpaper](https://github.com/user-attachments/assets/8acc6999-8f11-4ada-a891-8547e6f6e556)
 
 This repo is a template described in the blog post 
-[The Teach-Stack for Building Web Platforms in the AI-Native Era](https://dev.to/martinxpn/the-teach-stack-for-building-web-platforms-in-the-ai-native-era-45ka).
+[The Teach Stack for Building Full-Stack Apps in the AI-Agentic Era (2026 Edition)](https://dev.to/martinxpn/the-teach-stack-for-building-web-platforms-in-the-ai-native-era-45ka).
 
 ---
 
