@@ -1,5 +1,5 @@
 import {getDoc, onSnapshot, setDoc} from "firebase/firestore";
-import {getAuth, updateProfile} from 'firebase/auth';
+import {updateProfile} from 'firebase/auth';
 import {db} from "./db";
 import type {UserInfo} from "models/users";
 
@@ -14,7 +14,8 @@ export const onUserInfoChanged = (userId: string, onChanged: (user: UserInfo | n
 
 
 export const updateUserInfo = async (userId: string, displayName?: string, imageUrl?: string) => {
-    const user = getAuth().currentUser;
+    const {auth} = await import('@/firebase');
+    const user = auth.currentUser;
     if( !user )
         return;
 

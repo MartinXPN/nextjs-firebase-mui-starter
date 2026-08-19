@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import posthog from 'posthog-js';
 import useAsyncEffect from "@/hooks/asynceffect";
 import {updateUserInfo} from "@/services/users";
+import {auth as firebaseAuth} from '@/firebase';
 import {AuthContext, AuthUser} from "./AuthContext";
 import type {User as FirebaseUser} from "firebase/auth";
 
@@ -29,6 +30,7 @@ function AuthProvider({defaultUser, children}: { defaultUser: AuthUser | null, c
             console.log('No firebase user... Logging out...');
             if (!user)
                 return;
+
             console.log('logging out...');
             setUser(null);
             await fetch('/api/logout', {method: 'GET'});
@@ -43,8 +45,7 @@ function AuthProvider({defaultUser, children}: { defaultUser: AuthUser | null, c
         console.log(`login: ${login.status} ${login.statusText} ${await login.text()}`);
         if (login.status !== 200) {
             console.error('Failed to log in... Logging out instead');
-            const {getAuth} = await import('firebase/auth');
-            await getAuth().signOut();
+            await firebaseAuth.signOut();
             await fetch('/api/logout', {method: 'GET'});
             return router.refresh();
         }
@@ -68,9 +69,8 @@ function AuthProvider({defaultUser, children}: { defaultUser: AuthUser | null, c
 
 
     useAsyncEffect(async () => {
-        const {getAuth, onIdTokenChanged} = await import('firebase/auth');
-        const auth = getAuth();
-        return onIdTokenChanged(auth, handleIdTokenChanged);
+        const {onIdTokenChanged} = await import('firebase/auth');
+        return onIdTokenChanged(firebaseAuth, handleIdTokenChanged);
     }, unsubscribe => unsubscribe && unsubscribe(), []);
 
 

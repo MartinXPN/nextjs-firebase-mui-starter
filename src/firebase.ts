@@ -1,17 +1,14 @@
 'use client';
-import {getApp, getApps, initializeApp} from "firebase/app";
-import {initializeFirestore, getFirestore} from "firebase/firestore";
-import prodConfig from "@/firebase-config";
-import type {FirebaseApp} from "firebase/app";
-import type {Firestore} from "firebase/firestore";
+import {getApp, getApps, initializeApp} from 'firebase/app';
+import {browserLocalPersistence, browserPopupRedirectResolver, initializeAuth} from 'firebase/auth';
+import {initializeFirestore} from 'firebase/firestore';
+import prodConfig from '@/firebase-config';
 
-export let app: FirebaseApp, firestore: Firestore;
-if (!getApps().length) {
-    app = initializeApp(prodConfig);
-    firestore = initializeFirestore(app, {ignoreUndefinedProperties: true});
-    console.log('Initialized client firestore to ignore undefined properties', firestore.type);
-}
-else {
-    app = getApp();
-    firestore = getFirestore(app);
-}
+
+// Use initializeAuth/initializeFirestore instead of getAuth/getFirestore to prevent issues with Safari + IndexedDB
+export const app = getApps().length ? getApp() : initializeApp(prodConfig);
+export const firestore = initializeFirestore(app, {ignoreUndefinedProperties: true});
+export const auth = initializeAuth(app, typeof window === 'undefined' ? {} : {
+    persistence: browserLocalPersistence,
+    popupRedirectResolver: browserPopupRedirectResolver,
+});

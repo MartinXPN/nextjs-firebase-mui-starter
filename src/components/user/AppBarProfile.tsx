@@ -14,6 +14,7 @@ import {AuthContext} from "@/auth/AuthContext";
 import Link from "@/components/common/Link";
 import {ColorModeContext} from "@/theme/ColorModeContext";
 import SignIn from "@/auth/SignIn";
+import {auth as firebaseAuth} from '@/firebase';
 
 
 export function AppBarProfile() {
@@ -31,9 +32,8 @@ export function AppBarProfile() {
     }
 
     const onSignOutClicked = async () => {
-        const {getAuth} = await import('firebase/auth');
         handleClose();
-        await getAuth().signOut();
+        await firebaseAuth.signOut();
     }
     const onUserProfileClicked = useCallback(() => handleClose(), []);
     const toggleAppMode = () => setMode(mode === 'light' ? 'dark' : 'light');
